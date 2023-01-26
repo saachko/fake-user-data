@@ -19,4 +19,6 @@ const countries: Country[] = [
 
 const iconStyle = { fontSize: '1.1em', marginTop: '-3px' };
 
-export { step, countries, iconStyle };
+const cityPrefix = ['г.', 'г.', 'г.', 'город', 'деревня', 'дер.', 'село'];
+
+export { step, countries, iconStyle, cityPrefix };
