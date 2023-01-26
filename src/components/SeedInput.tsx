@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Form, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Button, Form, OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 import { SetState } from '../utils/types';
 
@@ -19,9 +19,16 @@ function SeedInput({ seed, setSeed }: SeedInputProps) {
     }
   };
 
+  const generateSeed = () => {
+    const min = 0;
+    const max = 9999999999;
+    const randomSeed = Math.round(min - 0.5 + Math.random() * (max - min + 1));
+    setSeed(randomSeed.toString());
+  };
+
   return (
     <div className="d-flex mt-3">
-      <Form.Label column sm="2" className="me-2">
+      <Form.Label column sm="2">
         Seed
       </Form.Label>
       <OverlayTrigger
@@ -39,6 +46,9 @@ function SeedInput({ seed, setSeed }: SeedInputProps) {
           onChange={({ target }) => updateSeed(target.value)}
         />
       </OverlayTrigger>
+      <Button className="w-75 ms-3" onClick={generateSeed}>
+        Random seed
+      </Button>
     </div>
   );
 }
