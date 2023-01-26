@@ -10,6 +10,7 @@ interface User {
 interface Country {
   id: Countries;
   title: string;
+  uniqueKey: string;
 }
 
 interface TableHeading {

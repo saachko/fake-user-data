@@ -1,7 +1,7 @@
 import Fakerator from 'fakerator';
 import seedRandom, { PRNG } from 'seedrandom';
 
-import { cityPrefix } from './constants';
+import { cityPrefix, countries } from './constants';
 import fakeData from './fakeData';
 import { User } from './interfaces';
 import { Countries } from './types';
@@ -18,8 +18,14 @@ const getArrayItem = (seedRandomize: PRNG, array: string[]) => {
   return array[index];
 };
 
+const getSeedPrefix = (country: Countries) => {
+  const countryItem = countries.find((item) => item.id === country);
+  return countryItem?.uniqueKey;
+};
+
 const getId = (seed: string, country: Countries) => {
-  const fakerator = createFakerator(seed, country);
+  const seedPrefix = getSeedPrefix(country);
+  const fakerator = createFakerator(seedPrefix + seed, country);
   return fakerator.random.hex(8);
 };
 
@@ -85,9 +91,10 @@ const getPhone = (seed: string, country: Countries) => {
 
 const getUser = (seed: string, country: Countries): User => {
   const seedRandomize = seedRandom(seed);
+  const seedHouseRandomize = seedRandom(seed + country);
   const city = getCity(seed, country, seedRandomize);
   const street = getStreet(seed, country, city, seedRandomize);
-  const house = getHouse(seed, country, seedRandomize);
+  const house = getHouse(seed, country, seedHouseRandomize);
   const address = `${city}${street}, ${house}`;
   return {
     id: getId(seed, country),

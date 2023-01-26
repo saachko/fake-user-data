@@ -1,19 +1,24 @@
 import { Country, TableHeading } from './interfaces';
 
-const step = 10;
+const pageStep = 10;
+
+const userRepeatStep = 10000000;
 
 const countries: Country[] = [
   {
     id: 'ru',
     title: 'RUS',
+    uniqueKey: '1',
   },
   {
     id: 'de',
     title: 'DE',
+    uniqueKey: '2',
   },
   {
     id: 'us',
     title: 'USA',
+    uniqueKey: '3',
   },
 ];
 
@@ -44,4 +49,11 @@ const tableHeadings: TableHeading[] = [
   },
 ];
 
-export { step, countries, iconStyle, cityPrefix, tableHeadings };
+export {
+  pageStep,
+  userRepeatStep,
+  countries,
+  iconStyle,
+  cityPrefix,
+  tableHeadings,
+};
