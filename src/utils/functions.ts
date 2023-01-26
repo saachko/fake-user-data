@@ -58,10 +58,11 @@ const getStreet = (
   seedRandomize: PRNG
 ) => {
   const fakerator = createFakerator(seed, country);
+  const street = `, ${fakerator.address.streetName()}`;
   if (city.includes('деревня' || 'дер.' || 'село')) {
-    return seedRandomize() > 0.7 ? '' : fakerator.address.streetName();
+    return seedRandomize() > 0.1 ? '' : street;
   }
-  return fakerator.address.streetName();
+  return street;
 };
 
 const getHouse = (seed: string, country: Countries, seedRandomize: PRNG) => {
@@ -87,7 +88,7 @@ const getUser = (seed: string, country: Countries): User => {
   const city = getCity(seed, country, seedRandomize);
   const street = getStreet(seed, country, city, seedRandomize);
   const house = getHouse(seed, country, seedRandomize);
-  const address = `${city}, ${street}, ${house}`;
+  const address = `${city}${street}, ${house}`;
   return {
     id: getId(seed, country),
     name: getName(seed, country, seedRandomize),

@@ -12,4 +12,9 @@ interface Country {
   title: string;
 }
 
-export type { User, Country };
+interface TableHeading {
+  id: string;
+  headingName: string;
+}
+
+export type { User, Country, TableHeading };
