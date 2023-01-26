@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 
 import { iconStyle } from '../utils/constants';
@@ -33,6 +33,9 @@ function MistakesInput({ mistakes, setMistakes }: MistakesInputProps) {
     if (Number(value) > 1000) {
       setMistakes('1000');
       setInputMistakes('1000');
+    } else if (Number(value) < 0) {
+      setMistakes('0.00');
+      setInputMistakes('');
     } else {
       setMistakes(value);
       setInputMistakes(value);
@@ -51,28 +54,40 @@ function MistakesInput({ mistakes, setMistakes }: MistakesInputProps) {
         >
           <AiOutlineMinus style={iconStyle} />
         </Button>
-        <Form.Control
-          readOnly
-          type="text"
-          className="pe-0"
-          style={{ width: '15%', borderRadius: '0' }}
-          value={Number(mistakes) > 10 ? '------' : Number(mistakes).toFixed(2)}
-        />
+        <OverlayTrigger
+          placement="bottom"
+          overlay={<Tooltip id="mistakes-slider">max 10</Tooltip>}
+        >
+          <Form.Control
+            readOnly
+            type="text"
+            className="pe-0"
+            style={{ width: '15%', borderRadius: '0' }}
+            value={
+              Number(mistakes) > 10 ? '------' : Number(mistakes).toFixed(2)
+            }
+          />
+        </OverlayTrigger>
         <Button
           style={{ borderRadius: '0 5px 5px 0' }}
           onClick={increaseMistakes}
         >
           <AiOutlinePlus style={iconStyle} />
         </Button>
-        <Form.Control
-          type="number"
-          className="ms-2 without-arrows"
-          style={{ width: '20%' }}
-          value={inputMistakes}
-          onChange={({ target }) => {
-            checkInputMistakes(target.value);
-          }}
-        />
+        <OverlayTrigger
+          placement="bottom"
+          overlay={<Tooltip id="mistakes">max 1000</Tooltip>}
+        >
+          <Form.Control
+            type="number"
+            className="ms-2 without-arrows"
+            style={{ width: '20%' }}
+            value={inputMistakes}
+            onChange={({ target }) => {
+              checkInputMistakes(target.value);
+            }}
+          />
+        </OverlayTrigger>
       </div>
     </div>
   );
