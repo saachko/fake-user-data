@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Controls from './components/Controls';
 import UsersTable from './components/UsersTable';
 import { pageStep, startUserQuantity } from './utils/constants';
-import getUser from './utils/functions';
+import { getUser, makeMistake } from './utils/functions';
 import { User } from './utils/interfaces';
 import { Countries } from './utils/types';
 
@@ -17,14 +17,15 @@ function App() {
     for (let i = start; i < end; i++) {
       const currentSeed = seed + i;
       const currentUser = getUser(currentSeed, country);
-      setUsers((prev) => [...prev, currentUser]);
+      const newUser = makeMistake(currentUser, mistakes, currentSeed);
+      setUsers((prev) => [...prev, newUser]);
     }
   };
 
   useEffect(() => {
     setUsers([]);
     getUsersList(0, startUserQuantity);
-  }, [seed, country]);
+  }, [seed, country, mistakes]);
 
   const loadNewUsers = () => {
     const isAtBottom =

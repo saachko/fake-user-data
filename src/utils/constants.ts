@@ -1,4 +1,5 @@
 import { Country, TableHeading } from './interfaces';
+import { UserKeys } from './types';
 
 const startUserQuantity = 20;
 
@@ -51,6 +52,8 @@ const tableHeadings: TableHeading[] = [
   },
 ];
 
+const userMistakeKeys: UserKeys[] = ['name', 'address', 'phone'];
+
 export {
   startUserQuantity,
   pageStep,
@@ -59,4 +62,5 @@ export {
   iconStyle,
   cityPrefix,
   tableHeadings,
+  userMistakeKeys,
 };

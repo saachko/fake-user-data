@@ -1,7 +1,7 @@
 import Fakerator from 'fakerator';
 import seedRandom, { PRNG } from 'seedrandom';
 
-import { cityPrefix, countries } from './constants';
+import { cityPrefix, countries, userMistakeKeys } from './constants';
 import fakeData from './fakeData';
 import { User } from './interfaces';
 import { Countries } from './types';
@@ -104,4 +104,24 @@ const getUser = (seed: string, country: Countries): User => {
   };
 };
 
-export default getUser;
+const deleteSymbol = (user: User, seed: string, seedRandomize: PRNG) => {
+  const keyWithMistake =
+    userMistakeKeys[Math.floor(seedRandomize() * userMistakeKeys.length)];
+  const valueWithMistake = user[keyWithMistake].split('');
+  const letterToDelete = getArrayItem(seedRandomize, valueWithMistake);
+  const letterIndex = valueWithMistake.indexOf(letterToDelete);
+  valueWithMistake.splice(letterIndex, 1);
+  return { ...user, [keyWithMistake]: valueWithMistake.join('') };
+};
+
+const makeMistake = (user: User, mistakes: string, seed: string) => {
+  const seedRandomize = seedRandom(seed);
+  const mistakesNumber = Math.floor(Number(mistakes));
+  let wrongUser = user;
+  for (let i = 0; i < mistakesNumber; i++) {
+    wrongUser = deleteSymbol(wrongUser, seed, seedRandomize);
+  }
+  return wrongUser;
+};
+
+export { getUser, makeMistake };
