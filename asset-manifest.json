@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/fake-user-data/static/css/main.de55297a.css",
+    "main.js": "/fake-user-data/static/js/main.bc065d41.js",
+    "index.html": "/fake-user-data/index.html",
+    "main.de55297a.css.map": "/fake-user-data/static/css/main.de55297a.css.map",
+    "main.bc065d41.js.map": "/fake-user-data/static/js/main.bc065d41.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.de55297a.css",
+    "static/js/main.bc065d41.js"
+  ]
+}
