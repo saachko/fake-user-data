@@ -1,10 +1,10 @@
 import Fakerator from 'fakerator';
 import seedRandom, { PRNG } from 'seedrandom';
 
-import { cityPrefix, countries, userMistakeKeys } from './constants';
-import fakeData from './fakeData';
-import { User } from './interfaces';
-import { Countries } from './types';
+import { cityPrefix, countries } from '../constants';
+import fakeData from '../fakeData';
+import { User } from '../interfaces';
+import { Countries } from '../types';
 
 const createFakerator = (seed: string, country: Countries) => {
   const fakerator = Fakerator(`${country}-${country.toUpperCase()}`);
@@ -104,77 +104,4 @@ const getUser = (seed: string, country: Countries): User => {
   };
 };
 
-const chooseWhereMistake = (user: User, seed: string, seedRandomize: PRNG) => {
-  const keyWithMistake =
-    userMistakeKeys[Math.floor(seedRandomize() * userMistakeKeys.length)];
-  const valueWithMistake = user[keyWithMistake].split('');
-  return { keyWithMistake, valueWithMistake };
-};
-
-const deleteSymbol = (user: User, seed: string, seedRandomize: PRNG) => {
-  const mistake = chooseWhereMistake(user, seed, seedRandomize);
-  const letterToDelete = getArrayItem(seedRandomize, mistake.valueWithMistake);
-  const letterIndex = mistake.valueWithMistake.indexOf(letterToDelete);
-  mistake.valueWithMistake.splice(letterIndex, 1);
-  return {
-    ...user,
-    [mistake.keyWithMistake]: mistake.valueWithMistake.join(''),
-  };
-};
-
-const addSymbol = (
-  user: User,
-  seed: string,
-  seedRandomize: PRNG,
-  country: Countries
-) => {
-  const mistake = chooseWhereMistake(user, seed, seedRandomize);
-  const randomValueIndex = Math.round(
-    0 - 0.5 + seedRandomize() * (mistake.valueWithMistake.length - 0 + 1)
-  );
-  const letters = fakeData[country].letters.split('');
-  const randomLetterIndex = Math.round(
-    0 - 0.5 + seedRandomize() * (letters.length - 0 + 1)
-  );
-  mistake.valueWithMistake.splice(
-    randomValueIndex,
-    0,
-    letters[randomLetterIndex]
-  );
-  return {
-    ...user,
-    [mistake.keyWithMistake]: mistake.valueWithMistake.join(''),
-  };
-};
-
-const shiftSymbols = (user: User, seed: string, seedRandomize: PRNG) => {
-  const mistake = chooseWhereMistake(user, seed, seedRandomize);
-  const wrongValue = mistake.valueWithMistake;
-  const randomValueIndex = Math.round(
-    0 - 0.5 + seedRandomize() * (wrongValue.length - 0 + 1)
-  );
-  const helper = wrongValue[randomValueIndex];
-  wrongValue[randomValueIndex] = wrongValue[randomValueIndex + 1];
-  wrongValue[randomValueIndex + 1] = helper;
-  return {
-    ...user,
-    [mistake.keyWithMistake]: mistake.valueWithMistake.join(''),
-  };
-};
-
-const makeMistake = (
-  user: User,
-  mistakes: string,
-  seed: string,
-  country: Countries
-) => {
-  const seedRandomize = seedRandom(seed);
-  const mistakesNumber = Math.floor(Number(mistakes));
-  let wrongUser = user;
-  for (let i = 0; i < mistakesNumber; i++) {
-    wrongUser = shiftSymbols(wrongUser, seed, seedRandomize);
-  }
-  return wrongUser;
-};
-
-export { getUser, makeMistake };
+export { getUser, getArrayItem };

@@ -3,7 +3,8 @@ import React, { useEffect, useState } from 'react';
 import Controls from './components/Controls';
 import UsersTable from './components/UsersTable';
 import { pageStep, startUserQuantity } from './utils/constants';
-import { getUser, makeMistake } from './utils/functions';
+import { getUser } from './utils/functions/generateUsers';
+import makeMistake from './utils/functions/makeMistakes';
 import { User } from './utils/interfaces';
 import { Countries } from './utils/types';
 
