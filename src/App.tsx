@@ -55,6 +55,7 @@ function App() {
         setSeed={setSeed}
         mistakes={mistakes}
         setMistakes={setMistakes}
+        users={users}
       />
       <UsersTable users={users} />
     </>

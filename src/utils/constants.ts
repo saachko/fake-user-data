@@ -52,6 +52,13 @@ const tableHeadings: TableHeading[] = [
   },
 ];
 
+const csvHeadings = [
+  { label: 'id', key: 'id' },
+  { label: 'Full name', key: 'name' },
+  { label: 'Address', key: 'address' },
+  { label: 'Phone number', key: 'phone' },
+];
+
 const userMistakeKeys: UserKeys[] = ['name', 'address', 'phone'];
 
 export {
@@ -62,5 +69,6 @@ export {
   iconStyle,
   cityPrefix,
   tableHeadings,
+  csvHeadings,
   userMistakeKeys,
 };
