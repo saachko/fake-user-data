@@ -1,5 +1,7 @@
 import { Country, TableHeading } from './interfaces';
 
+const startUserQuantity = 20;
+
 const pageStep = 10;
 
 const userRepeatStep = 10000000;
@@ -50,6 +52,7 @@ const tableHeadings: TableHeading[] = [
 ];
 
 export {
+  startUserQuantity,
   pageStep,
   userRepeatStep,
   countries,

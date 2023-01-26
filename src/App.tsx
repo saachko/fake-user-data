@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import Controls from './components/Controls';
 import UsersTable from './components/UsersTable';
+import { pageStep, startUserQuantity } from './utils/constants';
 import getUser from './utils/functions';
 import { User } from './utils/interfaces';
 import { Countries } from './utils/types';
@@ -11,7 +12,6 @@ function App() {
   const [seed, setSeed] = useState('0');
   const [mistakes, setMistakes] = useState('0.00');
   const [users, setUsers] = useState<User[]>([]);
-  const [userQuantity, setUserQuantity] = useState(20);
 
   const getUsersList = (start: number, end: number) => {
     for (let i = start; i < end; i++) {
@@ -23,8 +23,26 @@ function App() {
 
   useEffect(() => {
     setUsers([]);
-    getUsersList(0, userQuantity);
+    getUsersList(0, startUserQuantity);
   }, [seed, country]);
+
+  const loadNewUsers = () => {
+    const isAtBottom =
+      document.documentElement.scrollHeight -
+        document.documentElement.scrollTop <=
+      document.documentElement.clientHeight;
+
+    if (isAtBottom) {
+      getUsersList(users.length, users.length + pageStep);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', loadNewUsers);
+    return () => {
+      window.removeEventListener('scroll', loadNewUsers);
+    };
+  }, [users]);
 
   return (
     <>
