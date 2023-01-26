@@ -71,10 +71,25 @@ const makeMistake = (
   country: Countries
 ) => {
   const seedRandomize = seedRandom(seed);
-  const mistakesNumber = Math.floor(Number(mistakes));
+  const totalMistakes = Number(mistakes);
+  let mistakesNumber = Math.floor(totalMistakes);
+  if (totalMistakes > 1) {
+    const mistakeProbability = totalMistakes % mistakesNumber;
+    if (seedRandomize() < mistakeProbability) {
+      mistakesNumber++;
+    }
+  } else if (totalMistakes > 0 && totalMistakes < 1) {
+    mistakesNumber = seedRandomize() < totalMistakes ? 1 : 0;
+  }
   let wrongUser = user;
   for (let i = 0; i < mistakesNumber; i++) {
-    wrongUser = shiftSymbols(wrongUser, seed, seedRandomize);
+    if (seedRandomize() < 0.33) {
+      wrongUser = deleteSymbol(wrongUser, seed, seedRandomize);
+    } else if (seedRandomize() < 0.66) {
+      wrongUser = addSymbol(wrongUser, seed, seedRandomize, country);
+    } else {
+      wrongUser = shiftSymbols(wrongUser, seed, seedRandomize);
+    }
   }
   return wrongUser;
 };
