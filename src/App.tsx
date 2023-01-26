@@ -6,6 +6,7 @@ import UsersTable from './components/UsersTable';
 function App() {
   const [country, setCountry] = useState('ru');
   const [seed, setSeed] = useState('0');
+  const [mistakes, setMistakes] = useState('0.00');
 
   return (
     <>
@@ -14,6 +15,8 @@ function App() {
         setCountry={setCountry}
         seed={seed}
         setSeed={setSeed}
+        mistakes={mistakes}
+        setMistakes={setMistakes}
       />
       <UsersTable />
     </>

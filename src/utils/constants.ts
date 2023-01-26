@@ -15,4 +15,6 @@ const countries = [
   },
 ];
 
-export { step, countries };
+const iconStyle = { fontSize: '1.1em', marginTop: '-3px' };
+
+export { step, countries, iconStyle };
