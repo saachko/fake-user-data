@@ -147,6 +147,21 @@ const addSymbol = (
   };
 };
 
+const shiftSymbols = (user: User, seed: string, seedRandomize: PRNG) => {
+  const mistake = chooseWhereMistake(user, seed, seedRandomize);
+  const wrongValue = mistake.valueWithMistake;
+  const randomValueIndex = Math.round(
+    0 - 0.5 + seedRandomize() * (wrongValue.length - 0 + 1)
+  );
+  const helper = wrongValue[randomValueIndex];
+  wrongValue[randomValueIndex] = wrongValue[randomValueIndex + 1];
+  wrongValue[randomValueIndex + 1] = helper;
+  return {
+    ...user,
+    [mistake.keyWithMistake]: mistake.valueWithMistake.join(''),
+  };
+};
+
 const makeMistake = (
   user: User,
   mistakes: string,
@@ -157,7 +172,7 @@ const makeMistake = (
   const mistakesNumber = Math.floor(Number(mistakes));
   let wrongUser = user;
   for (let i = 0; i < mistakesNumber; i++) {
-    wrongUser = addSymbol(wrongUser, seed, seedRandomize, country);
+    wrongUser = shiftSymbols(wrongUser, seed, seedRandomize);
   }
   return wrongUser;
 };
