@@ -17,7 +17,7 @@ function App() {
     for (let i = start; i < end; i++) {
       const currentSeed = seed + i;
       const currentUser = getUser(currentSeed, country);
-      const newUser = makeMistake(currentUser, mistakes, currentSeed);
+      const newUser = makeMistake(currentUser, mistakes, currentSeed, country);
       setUsers((prev) => [...prev, newUser]);
     }
   };

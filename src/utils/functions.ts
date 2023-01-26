@@ -104,22 +104,60 @@ const getUser = (seed: string, country: Countries): User => {
   };
 };
 
-const deleteSymbol = (user: User, seed: string, seedRandomize: PRNG) => {
+const chooseWhereMistake = (user: User, seed: string, seedRandomize: PRNG) => {
   const keyWithMistake =
     userMistakeKeys[Math.floor(seedRandomize() * userMistakeKeys.length)];
   const valueWithMistake = user[keyWithMistake].split('');
-  const letterToDelete = getArrayItem(seedRandomize, valueWithMistake);
-  const letterIndex = valueWithMistake.indexOf(letterToDelete);
-  valueWithMistake.splice(letterIndex, 1);
-  return { ...user, [keyWithMistake]: valueWithMistake.join('') };
+  return { keyWithMistake, valueWithMistake };
 };
 
-const makeMistake = (user: User, mistakes: string, seed: string) => {
+const deleteSymbol = (user: User, seed: string, seedRandomize: PRNG) => {
+  const mistake = chooseWhereMistake(user, seed, seedRandomize);
+  const letterToDelete = getArrayItem(seedRandomize, mistake.valueWithMistake);
+  const letterIndex = mistake.valueWithMistake.indexOf(letterToDelete);
+  mistake.valueWithMistake.splice(letterIndex, 1);
+  return {
+    ...user,
+    [mistake.keyWithMistake]: mistake.valueWithMistake.join(''),
+  };
+};
+
+const addSymbol = (
+  user: User,
+  seed: string,
+  seedRandomize: PRNG,
+  country: Countries
+) => {
+  const mistake = chooseWhereMistake(user, seed, seedRandomize);
+  const randomValueIndex = Math.round(
+    0 - 0.5 + seedRandomize() * (mistake.valueWithMistake.length - 0 + 1)
+  );
+  const letters = fakeData[country].letters.split('');
+  const randomLetterIndex = Math.round(
+    0 - 0.5 + seedRandomize() * (letters.length - 0 + 1)
+  );
+  mistake.valueWithMistake.splice(
+    randomValueIndex,
+    0,
+    letters[randomLetterIndex]
+  );
+  return {
+    ...user,
+    [mistake.keyWithMistake]: mistake.valueWithMistake.join(''),
+  };
+};
+
+const makeMistake = (
+  user: User,
+  mistakes: string,
+  seed: string,
+  country: Countries
+) => {
   const seedRandomize = seedRandom(seed);
   const mistakesNumber = Math.floor(Number(mistakes));
   let wrongUser = user;
   for (let i = 0; i < mistakesNumber; i++) {
-    wrongUser = deleteSymbol(wrongUser, seed, seedRandomize);
+    wrongUser = addSymbol(wrongUser, seed, seedRandomize, country);
   }
   return wrongUser;
 };
