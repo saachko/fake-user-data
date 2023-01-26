@@ -2,11 +2,11 @@ import React from 'react';
 import { Button, ButtonGroup, ButtonToolbar } from 'react-bootstrap';
 
 import { countries } from '../utils/constants';
-import { SetState } from '../utils/types';
+import { Countries, SetState } from '../utils/types';
 
 interface CountrySelectorProps {
   country: string;
-  setCountry: SetState<string>;
+  setCountry: SetState<Countries>;
 }
 
 function CountrySelector({ country, setCountry }: CountrySelectorProps) {

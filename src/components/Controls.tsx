@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { SetState } from '../utils/types';
+import { Countries, SetState } from '../utils/types';
 import CountrySelector from './CountrySelector';
 import MistakesInput from './MistakesInput';
 import SeedInput from './SeedInput';
 
 interface ControlsProps {
   country: string;
-  setCountry: SetState<string>;
+  setCountry: SetState<Countries>;
   seed: string;
   setSeed: SetState<string>;
   mistakes: string;

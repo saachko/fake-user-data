@@ -1,6 +1,8 @@
+import { Country } from './interfaces';
+
 const step = 10;
 
-const countries = [
+const countries: Country[] = [
   {
     id: 'ru',
     title: 'RUS',
