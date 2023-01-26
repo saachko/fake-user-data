@@ -28,7 +28,7 @@ function SeedInput({ seed, setSeed }: SeedInputProps) {
         placement="bottom"
         overlay={
           <Tooltip id="seed">
-            Any number you want from 0 to 9 999 999 999
+            Any integer you want from 0 to 9 999 999 999
           </Tooltip>
         }
       >
