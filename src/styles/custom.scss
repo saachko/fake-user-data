@@ -1,0 +1,19 @@
+.without-arrows {
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  &[type='number'] {
+    -moz-appearance: textfield;
+  }
+}
+
+.no-text-decoration {
+  text-decoration: none;
+}
+
+.fs-md {
+  font-size: 1.2em;
+}
